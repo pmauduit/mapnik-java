@@ -7,10 +7,10 @@ package fr.beneth.mapnik;
  */
 public class BoundingBoxUtil {
 
-    double north = 0.0;
-    double south = 0.0;
-    double east = 0.0;
-    double west = 0.0;
+    private double north = 0.0;
+    private double south = 0.0;
+    private double east = 0.0;
+    private double west = 0.0;
 
     public static BoundingBoxUtil tile2boundingBox(final int x, final int y,
             final int zoom) {
@@ -29,5 +29,21 @@ public class BoundingBoxUtil {
     public static double tile2lat(int y, int z) {
         double n = Math.PI - (2.0 * Math.PI * y) / Math.pow(2.0, z);
         return Math.toDegrees(Math.atan(Math.sinh(n)));
+    }
+
+    public double getNorth() {
+        return north;
+    }
+
+    public double getSouth() {
+        return south;
+    }
+
+    public double getEast() {
+        return east;
+    }
+
+    public double getWest() {
+        return west;
     }
 }

@@ -29,8 +29,10 @@ public class TileServer {
     private final int TILE_SIZE = 256;
     private boolean mapnikAvailable = false;
     private static Logger logger = Logger.getLogger(TileServer.class);
-    
+
     public TileServer() {
+        // All the logic here is not really safe ... in fact, a loadLibrary
+        // which fails might disturb previous loads.
         try {
             Class.forName("mapnik.Mapnik");
         } catch (ClassNotFoundException e) {
@@ -51,22 +53,31 @@ public class TileServer {
         }
         mapnikAvailable = true;
     }
-    
     @RequestMapping("/tile/{z}/{x}/{y}.png")
     @ResponseBody
     public byte[] getTile(@PathVariable int z, @PathVariable int x, @PathVariable int y,
             HttpServletResponse response) throws Exception {
         response.setContentType("image/png");
 
+        if (! mapnikAvailable) {
+            return null;
+        }
         BoundingBoxUtil bb = BoundingBoxUtil.tile2boundingBox(x, y, z);
-        
-        
+
+        logger.debug(String.format("before proj: %f,%f,%f,%f",
+                bb.getEast(), bb.getSouth(), bb.getWest(), bb.getNorth()));
+
+        bb = BoundingBoxUtil.reprojectFromWgsToGoog(bb);
+
+        logger.debug(String.format("after proj: %f,%f,%f,%f",
+                bb.getEast(), bb.getSouth(), bb.getWest(), bb.getNorth()));
+
         Box2d bounds = new Box2d(bb.getWest(), bb.getSouth(), bb.getEast(), bb.getNorth());
         MapDefinition m = new MapDefinition();
 
         URL myMapFile = EntryPoint.class.getResource("/data/simplemap.xml");
         m.loadMap(new File(myMapFile.toURI()).getAbsolutePath(), false);
-        m.setSrs(Projection.LATLNG_PARAMS);
+        m.setSrs(Projection.SRS900913_PARAMS);
         m.resize(TILE_SIZE, TILE_SIZE);
         m.zoomToBox(bounds);
         Image image = new Image(TILE_SIZE, TILE_SIZE);
@@ -78,7 +89,6 @@ public class TileServer {
 
         return contents;
     }
-    
     @RequestMapping("/demo")
     @ResponseBody
     public byte[] demo(HttpServletResponse response)
@@ -86,6 +96,5 @@ public class TileServer {
         response.setContentType("text/html; charset=utf-8");
         URL sampleHtml = this.getClass().getResource("/sample.html");
         return Files.readAllBytes(Paths.get(sampleHtml.toURI()));
-    }
-    
+    }   
 }

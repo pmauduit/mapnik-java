@@ -1,5 +1,13 @@
 package fr.beneth.mapnik;
 
+import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.geotools.referencing.CRS;
+import org.geotools.referencing.crs.DefaultGeographicCRS;
+import org.opengis.geometry.BoundingBox;
+import org.opengis.referencing.FactoryException;
+import org.opengis.referencing.crs.CoordinateReferenceSystem;
+import org.opengis.referencing.operation.TransformException;
+
 /**
  * Bounding box utility calculation class, stolen/adapted from
  * http://wiki.openstreetmap.org/wiki/Slippy_map_tilenames#Tile_bounding_box
@@ -22,6 +30,21 @@ public class BoundingBoxUtil {
         return bb;
     }
 
+    public BoundingBoxUtil(double minx, double miny, double maxx, double maxy) {
+        west = minx; south = miny; east = maxx; north = maxy;
+    }
+    
+    public BoundingBoxUtil() {}
+
+    public static BoundingBoxUtil reprojectFromWgsToGoog(BoundingBoxUtil u) throws TransformException, FactoryException {
+        ReferencedEnvelope envelope = new ReferencedEnvelope(u.west, u.east,
+                u.south, u.north, DefaultGeographicCRS.WGS84);
+        CoordinateReferenceSystem nproj = CRS.decode("EPSG:3857");
+        BoundingBox newb = envelope.toBounds(nproj);
+        return new BoundingBoxUtil(newb.getMinX(), newb.getMinY(),
+                newb.getMaxX(), newb.getMaxY());
+    }
+    
     public static double tile2lon(int x, int z) {
         return x / Math.pow(2.0, z) * 360.0 - 180;
     }

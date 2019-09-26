@@ -15,8 +15,9 @@ Once cloned, the repository will require the `libmapnik3.0-dev` package. Then a
 simple `make` will result in the `build/dist/libmapnik-jni.so` file to be
 generated.
 
-Copy this `libmapnik-jni.so` to `/usr/lib/jni/` directory, and you should
-be done with the setup of the mapnik bindings.
+Copy this `libmapnik-jni.so` to `/usr/lib/jni/` directory, the
+`libmapnik-jni.jar` into `src/main/resources` of this repository, then you
+should be done with the mapnik bindings setup.
 
 # Data
 

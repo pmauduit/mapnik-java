@@ -16,8 +16,8 @@ simple `make` will result in the `build/dist/libmapnik-jni.so` file to be
 generated.
 
 Copy this `libmapnik-jni.so` to `/usr/lib/jni/` directory, the
-`libmapnik-jni.jar` into `src/main/resources` of this repository, then you
-should be done with the mapnik bindings setup.
+`libmapnik-jni.jar` into `/usr/share/java`, then you should be done with the
+mapnik bindings setup.
 
 # Data
 

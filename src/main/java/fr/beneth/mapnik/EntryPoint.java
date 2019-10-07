@@ -14,6 +14,7 @@ import mapnik.MapDefinition;
 import mapnik.Mapnik;
 import mapnik.Projection;
 import mapnik.Renderer;
+import mapnik.Layer;
 
 public class EntryPoint {
 
@@ -21,9 +22,9 @@ public class EntryPoint {
 
         Mapnik.initialize();
         // France métropolitaine
-        // -9.86 41.15
-        // 10.38 51.56
-        Box2d bounds = new Box2d(-9.86, 41.15, 10.38, 51.56);
+        // -9.86 41.15   : -1097610.18 5034491.87
+        // 10.38 51.56   : 1155496.31 6720955.49
+        Box2d bounds = new Box2d(-1097610.18, 5034491.87, 1155496.31, 6720955.49);
         MapDefinition m = new MapDefinition();
 
         URL myMapFile = EntryPoint.class.getResource("/data/france.xml");
@@ -31,9 +32,16 @@ public class EntryPoint {
         FreetypeEngine.registerFonts(Mapnik.getInstalledFontsDir(), true);
 
         m.loadMap(new File(myMapFile.toURI()).getAbsolutePath(), false);
-        m.setSrs(Projection.LATLNG_PARAMS);
+        // Programatically get Aquitaine and set it to red Style
+        Layer aquitaine = m.getLayer(1);
+        aquitaine.setStyles(new String[]{ "red" });
+        m.removeLayer(1);
+        m.addLayer(aquitaine);
+
+        m.setSrs(Projection.SRS900913_PARAMS);
         m.resize(4096, 4096);
         m.zoomToBox(bounds);
+
 
         Image image = new Image(4096, 4096);
         Renderer.renderAgg(m, image);

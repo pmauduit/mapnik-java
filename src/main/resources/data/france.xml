@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Map background-color="#000" srs="+proj=longlat +datum=WGS84 +no_defs">
+<Map background-color="#000" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext  +no_defs">
 	<Style name="white">
 		<Rule>
-			<PolygonSymbolizer fill-opacity="1" fill="#fff"/>
+			<PolygonSymbolizer fill-opacity="0.1" fill="#fff"/>
 		</Rule>
 	</Style>
 	<Style name="green">
 		<Rule>
-			<PolygonSymbolizer fill-opacity="0.8" fill="#0f0"/>
+			<PolygonSymbolizer fill-opacity="0.8" gamma="0.2" fill="#0f0" comp-op="lighten" />
+			<LineSymbolizer stroke-width="2" stroke="#0f0" />
+		</Rule>
+	</Style>
+	<Style name="red">
+		<Rule>
+			<PolygonSymbolizer fill-opacity="0.8" gamma="0.2" fill="#f00" comp-op="lighten" />
+			<LineSymbolizer stroke-width="2" stroke="#f00" />
 		</Rule>
 	</Style>
 	<Layer name="france.geojson" status="on" srs="+proj=longlat +datum=WGS84 +no_defs">
@@ -15,8 +22,31 @@
 		<Datasource>
 	      <Parameter name="type">ogr</Parameter>
 	      <Parameter name="file">france.geojson</Parameter>
-	      <Parameter name="layer">OGRGeoJSON</Parameter>
+	      <Parameter name="layer">france</Parameter>
 		</Datasource>
 	</Layer>
-	
+	<Layer name="nouvelle-aquitaine.geojson" status="on" srs="+proj=longlat +datum=WGS84 +no_defs">
+		<StyleName>green</StyleName>
+		<Datasource>
+				<Parameter name="type">ogr</Parameter>
+				<Parameter name="file">nouvelle-aquitaine.geojson</Parameter>
+				<Parameter name="layer">Nouvelle-Aquitaine</Parameter>
+		</Datasource>
+	</Layer>
+	<Layer name="grand-est.geojson" status="on" srs="+proj=longlat +datum=WGS84 +no_defs">
+		<StyleName>green</StyleName>
+		<Datasource>
+				<Parameter name="type">ogr</Parameter>
+				<Parameter name="file">grand-est.geojson</Parameter>
+				<Parameter name="layer">grand-est</Parameter>
+		</Datasource>
+	</Layer>
+	<Layer name="hauts-de-france.geojson" status="on" srs="+proj=longlat +datum=WGS84 +no_defs">
+		<StyleName>green</StyleName>
+		<Datasource>
+				<Parameter name="type">ogr</Parameter>
+				<Parameter name="file">hauts-de-france.geojson</Parameter>
+				<Parameter name="layer">hauts-de-france</Parameter>
+		</Datasource>
+	</Layer>
 </Map>

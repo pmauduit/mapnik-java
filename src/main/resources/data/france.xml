@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Map background-color="#000" srs="+proj=longlat +datum=WGS84 +no_defs">
+	<Style name="white">
+		<Rule>
+			<PolygonSymbolizer fill-opacity="1" fill="#fff"/>
+		</Rule>
+	</Style>
+	<Style name="green">
+		<Rule>
+			<PolygonSymbolizer fill-opacity="0.8" fill="#0f0"/>
+		</Rule>
+	</Style>
+	<Layer name="france.geojson" status="on" srs="+proj=longlat +datum=WGS84 +no_defs">
+		<StyleName>white</StyleName>
+		<Datasource>
+	      <Parameter name="type">ogr</Parameter>
+	      <Parameter name="file">france.geojson</Parameter>
+	      <Parameter name="layer">OGRGeoJSON</Parameter>
+		</Datasource>
+	</Layer>
+	
+</Map>

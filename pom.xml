@@ -28,6 +28,23 @@
           </httpConnector>
         </configuration>
       </plugin>
+            <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>1.6.0</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+          </execution>
+        </executions>
+  		<configuration>
+		  <includeProjectDependencies>true</includeProjectDependencies>
+          <mainClass>fr.beneth.mapnik.EntryPoint</mainClass>
+          <classpathScope>compile</classpathScope>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
   <dependencies>
@@ -36,8 +53,7 @@
       <artifactId>mapnik</artifactId>
       <version>3.0.9</version>
       <scope>system</scope>
-      <systemPath>/usr/share/java/mapnik-jni.jar
-			</systemPath>
+      <systemPath>/usr/share/java/mapnik-jni.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>

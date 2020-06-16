@@ -7,7 +7,7 @@
   <packaging>war</packaging>
   <name>A rapid tileserver using JNI bindings against mapnik 3.0.x</name>
   <properties>
-    <spring.version>5.1.1.RELEASE</spring.version>
+    <spring.version>5.2.7.RELEASE</spring.version>
     <geotools.version>20.0</geotools.version>
   </properties>
   <build>

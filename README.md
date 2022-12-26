@@ -4,6 +4,14 @@ This is a simple tileserver based on Spring and the libmapnik JNI bindings.
 
 # Requirements
 
+the Mapnik library will be needed, as this is all this PoC is about. Under
+debian unstable, as of writing this note, the setup can be performed issuing
+the following command:
+
+```
+# apt install libmapnik3.1
+```
+
 The `mapnik-jni` bindings for mapnik 3 will be needed. The original authors of
 Mapnik do not maintain such a tool, but there is a one available here:
 
